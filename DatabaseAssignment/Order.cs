@@ -1,9 +1,9 @@
 namespace DatabaseAssignment;
 
-public class Order(Customer customer)
+public class Order(int customerId)
 {
     public int Id { get; set; } = -1;
-    public Customer Customer { get; set; } = customer;
+    public int CustomerId { get; set; } = customerId;
 
-    public List<Product> Products { get; set; } = [];
+    public List<int> Products { get; set; } = [];
 }
