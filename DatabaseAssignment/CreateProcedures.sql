@@ -1,9 +1,9 @@
 use Archer
 
 create procedure AddCustomer(
-    @FirstName varchar(32),
-    @LastName varchar(64),
-    @Email varchar(64),
+    @FirstName nvarchar(32),
+    @LastName nvarchar(64),
+    @Email nvarchar(64),
     @ID int output
 )
 as begin
@@ -22,14 +22,14 @@ create procedure UpdateCustomerEmail(
 )
 as begin
     update Customer
-    set Email = @newEmail
+    set email = @newEmail
     where ID = @ID
 end
 go
 
 create procedure AddProduct(
-    @Name varchar(32),
-    @Category varchar(32),
+    @Name nvarchar(32),
+    @Category nvarchar(32),
     @Price decimal(19, 4),
     @ID int output
 )
@@ -40,6 +40,19 @@ as begin
         (@Name, @Category, @Price)
 
     set @ID = SCOPE_IDENTITY();
+end
+go
+
+create procedure UpdateProduct(
+    @newName nvarchar(32),
+    @newCategory nvarchar(32),
+    @newPrice decimal(19, 4),
+    @ID int
+)
+as begin
+    update Product
+    set name = @newName, category = @newCategory, price = @newPrice
+    where ID = @ID
 end
 go
 

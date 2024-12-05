@@ -15,9 +15,9 @@ public class Archer(string connectionString)
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = "AddCustomer";
         
-        command.Parameters.Add("@FirstName", SqlDbType.VarChar, 32).Value = customer.FirstName;
-        command.Parameters.Add("@LastName", SqlDbType.VarChar, 64).Value = customer.LastName;
-        command.Parameters.Add("@Email", SqlDbType.VarChar, 64).Value = customer.Email;
+        command.Parameters.Add("@FirstName", SqlDbType.NVarChar, 32).Value = customer.FirstName;
+        command.Parameters.Add("@LastName", SqlDbType.NVarChar, 64).Value = customer.LastName;
+        command.Parameters.Add("@Email", SqlDbType.NVarChar, 64).Value = customer.Email;
         
         command.Parameters.Add("@ID", SqlDbType.Int).Direction = ParameterDirection.Output;
         
@@ -35,7 +35,7 @@ public class Archer(string connectionString)
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = "UpdateCustomerEmail";
         
-        command.Parameters.Add("@newEmail", SqlDbType.VarChar, 64).Value = newEmail;
+        command.Parameters.Add("@newEmail", SqlDbType.NVarChar, 64).Value = newEmail;
         command.Parameters.Add("@ID", SqlDbType.Int).Value = customerId;
         
         connection.Open();
@@ -50,8 +50,8 @@ public class Archer(string connectionString)
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = "AddProduct";
         
-        command.Parameters.Add("@Name", SqlDbType.VarChar, 32).Value = product.Name;
-        command.Parameters.Add("@Category", SqlDbType.VarChar, 32).Value = product.Category;
+        command.Parameters.Add("@Name", SqlDbType.NVarChar, 32).Value = product.Name;
+        command.Parameters.Add("@Category", SqlDbType.NVarChar, 32).Value = product.Category;
         command.Parameters.Add(new SqlParameter("@Price", SqlDbType.Decimal)
         {
             Precision = 19,
@@ -63,6 +63,29 @@ public class Archer(string connectionString)
         command.ExecuteNonQuery();
         
         product.Id = (int)command.Parameters["@ID"].Value;
+    }
+    
+    public void UpdateProduct(int productId, string newName, string newCategory, decimal newPrice)
+    {
+        using SqlConnection connection = new(_connectionString);
+        using SqlCommand command = connection.CreateCommand();
+
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = "UpdateProduct";
+        
+        command.Parameters.Add("@newName", SqlDbType.NVarChar, 32).Value = newName;
+        command.Parameters.Add("@newCategory", SqlDbType.NVarChar, 32).Value = newCategory;
+        command.Parameters.Add(new SqlParameter("@newPrice", SqlDbType.Decimal)
+        {
+            Precision = 19,
+            Scale = 4
+        }).Value = newPrice;
+        
+        
+        command.Parameters.Add("@ID", SqlDbType.Int).Value = productId;
+        
+        connection.Open();
+        command.ExecuteNonQuery();
     }
 
     public void AddOrder(Order order)

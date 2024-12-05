@@ -45,6 +45,6 @@ class Program
             Console.WriteLine($"{c.FirstName} {c.LastName} - {p.Name}");
         }
         
-        archer.UpdateCustomerEmail(1, "newemail@mail.com");
+        archer.UpdateProduct(1, "Banana", "Fruit", 0.44m);
     }
 }
