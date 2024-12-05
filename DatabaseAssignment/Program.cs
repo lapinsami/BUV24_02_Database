@@ -30,10 +30,12 @@ class Program
 
         foreach (Product p in productList)
         {
-            Console.WriteLine(p.Name);
+            Console.WriteLine(p.Name + ", " + p.Category + " : " + p.Price + " eur");
         }
         
         Console.WriteLine("------");
+        
+        archer.UpdateOrderProduct(1, 4);
 
         List<Order> orderList = archer.GetOrders();
 
@@ -45,6 +47,6 @@ class Program
             Console.WriteLine($"{c.FirstName} {c.LastName} - {p.Name}");
         }
         
-        archer.UpdateProduct(1, "Banana", "Fruit", 0.44m);
+        archer.UpdateProductPrice(2, 0.8m);
     }
 }

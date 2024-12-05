@@ -17,7 +17,7 @@ end
 go
 
 create procedure UpdateCustomerEmail(
-    @newEmail varchar(64),
+    @newEmail nvarchar(64),
     @ID int
 )
 as begin
@@ -71,4 +71,15 @@ as begin
 end
 go
 
-select * from [Customer]
+create procedure UpdateOrderProduct(
+    @newProductId int,
+    @ID int
+)
+as begin
+    update [Order]
+    set ProductID = @newProductId
+    where ID = @ID
+end
+go
+
+select * from [Product]
