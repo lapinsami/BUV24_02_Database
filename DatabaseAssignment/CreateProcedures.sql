@@ -65,7 +65,7 @@ as begin
     insert into
         [Order]
     values
-        (@CustomerId, @ProductId, getdate())
+        (@CustomerId, @ProductId)
 
     set @ID = SCOPE_IDENTITY();
 end

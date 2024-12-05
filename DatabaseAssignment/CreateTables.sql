@@ -20,8 +20,7 @@ create table Product (
 create table [Order] (
     ID int primary key identity not null,
     CustomerID int references Customer on delete cascade,
-    ProductID int references Product on delete cascade,
-    OrderDate date
+    ProductID int references Product on delete cascade
 )
 
 insert into Customer (FirstName, LastName, Email)
@@ -36,12 +35,13 @@ values
     ('Carrot', 'Vegetable', 0.32),
     ('Mustard', 'Condiment', 2.7)
 
-insert into [Order] (CustomerID, ProductID, OrderDate)
+insert into [Order] (CustomerID, ProductID)
 values
-    (1, 1, getdate()),
-    (1, 2, getdate()),
-    (1, 3, getdate()),
-    (2, 4, getdate())
+    (1, 1),
+    (2, 2),
+    (1, 3),
+    (2, 4),
+    (1, 4)
 
 drop table [Order]
 drop table Product
