@@ -1,4 +1,5 @@
 use Archer
+go
 
 create procedure AddCustomer(
     @FirstName nvarchar(32),
