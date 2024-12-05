@@ -1,0 +1,3 @@
+- run [CreateTables.sql](DatabaseAssignment/CreateTables.sql)
+- run [CreateProcedures.sql](DatabaseAssignment/CreateProcedures.sql)
+- run
