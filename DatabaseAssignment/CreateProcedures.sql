@@ -108,5 +108,3 @@ as begin
     where ID = @ID
 end
 go
-
-select * from [Product]
