@@ -17,23 +17,11 @@ class Program
         //archer.AddProduct(cookingCream);
         //archer.AddOrder(order);
 
-        Customer? customer = archer.GetCustomerById(2);
-        if (customer != null)
+        List<Customer>? customerList = archer.GetCustomers();
+
+        foreach (Customer c in customerList)
         {
-            Console.WriteLine(customer.FirstName);
-        }
-        
-        Product? product = archer.GetProductById(2);
-        if (product != null)
-        {
-            Console.WriteLine(product.Name);
-        }
-        
-        Order? order = archer.GetOrderById(4);
-        if (order != null)
-        {
-            Console.WriteLine(order.ProductId);
-            Console.WriteLine(order.CustomerId);
+            Console.WriteLine(c.FirstName);
         }
     }
 }

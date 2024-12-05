@@ -9,7 +9,7 @@ public class Archer(string connectionString)
     
     public void AddCustomer(Customer customer)
     {
-        using SqlConnection connection = new (_connectionString);
+        using SqlConnection connection = new(_connectionString);
         using SqlCommand command = connection.CreateCommand();
 
         command.CommandType = CommandType.StoredProcedure;
@@ -29,7 +29,7 @@ public class Archer(string connectionString)
     
     public void AddProduct(Product product)
     {
-        using SqlConnection connection = new (_connectionString);
+        using SqlConnection connection = new(_connectionString);
         using SqlCommand command = connection.CreateCommand();
 
         command.CommandType = CommandType.StoredProcedure;
@@ -52,7 +52,7 @@ public class Archer(string connectionString)
 
     public void AddOrder(Order order)
     {
-        using SqlConnection connection = new (_connectionString);
+        using SqlConnection connection = new(_connectionString);
         using SqlCommand command = connection.CreateCommand();
         
         command.CommandType = CommandType.StoredProcedure;
@@ -72,7 +72,7 @@ public class Archer(string connectionString)
     {
         Customer? customer = null;
 
-        using SqlConnection connection = new SqlConnection(_connectionString);
+        using SqlConnection connection = new(_connectionString);
         using SqlCommand command = connection.CreateCommand();
 
         command.CommandText = @"select * from Customer where ID = @ID";
@@ -101,7 +101,7 @@ public class Archer(string connectionString)
     {
         Product? product = null;
 
-        using SqlConnection connection = new SqlConnection(_connectionString);
+        using SqlConnection connection = new(_connectionString);
         using SqlCommand command = connection.CreateCommand();
 
         command.CommandText = @"select * from Product where ID = @ID";
@@ -130,7 +130,7 @@ public class Archer(string connectionString)
     {
         Order? order = null;
 
-        using SqlConnection connection = new SqlConnection(_connectionString);
+        using SqlConnection connection = new(_connectionString);
         using SqlCommand command = connection.CreateCommand();
 
         command.CommandText = @"select * from [Order] where ID = @ID";
@@ -152,5 +152,41 @@ public class Archer(string connectionString)
         }
 
         return order;
+    }
+    
+    public List<Customer>? GetCustomers()
+    {
+        List<Customer>? customers = null;
+
+        using SqlConnection connection = new(_connectionString);
+        using SqlCommand command = connection.CreateCommand();
+
+        command.CommandText = @"select * from Customer";
+        command.CommandType = CommandType.Text;
+        
+        connection.Open();
+        using SqlDataReader reader = command.ExecuteReader();
+
+        if (reader.HasRows)
+        {
+            customers = new List<Customer>();
+
+            while (reader.Read())
+            {
+                Customer customer = new(
+
+                    (string)reader["FirstName"],
+                    (string)reader["LastName"],
+                    (string)reader["Email"]
+                )
+                {
+                    Id = (int)reader["ID"]
+                };
+
+                customers.Add(customer);
+            }
+        }
+
+        return customers;
     }
 }
