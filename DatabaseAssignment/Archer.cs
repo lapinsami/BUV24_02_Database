@@ -27,6 +27,20 @@ public class Archer(string connectionString)
         customer.Id = (int)command.Parameters["@ID"].Value;
     }
     
+    public void DeleteCustomer(int customerId)
+    {
+        using SqlConnection connection = new(_connectionString);
+        using SqlCommand command = connection.CreateCommand();
+        
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = "DeleteCustomer";
+        
+        command.Parameters.Add("@ID", SqlDbType.Int).Value = customerId;
+        
+        connection.Open();
+        command.ExecuteNonQuery();
+    }
+    
     public void UpdateCustomerEmail(int customerId, string newEmail)
     {
         using SqlConnection connection = new(_connectionString);
@@ -63,6 +77,20 @@ public class Archer(string connectionString)
         command.ExecuteNonQuery();
         
         product.Id = (int)command.Parameters["@ID"].Value;
+    }
+    
+    public void DeleteProduct(int productId)
+    {
+        using SqlConnection connection = new(_connectionString);
+        using SqlCommand command = connection.CreateCommand();
+        
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = "DeleteProduct";
+        
+        command.Parameters.Add("@ID", SqlDbType.Int).Value = productId;
+        
+        connection.Open();
+        command.ExecuteNonQuery();
     }
     
     public void UpdateProduct(int productId, string newName, string newCategory, decimal newPrice)

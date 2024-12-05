@@ -19,8 +19,8 @@ create table Product (
 
 create table [Order] (
     ID int primary key identity not null,
-    CustomerID int references Customer,
-    ProductID int references Product,
+    CustomerID int references Customer on delete cascade,
+    ProductID int references Product on delete cascade,
     OrderDate date
 )
 

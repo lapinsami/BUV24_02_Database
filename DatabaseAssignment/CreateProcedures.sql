@@ -91,4 +91,22 @@ as begin
 end
 go
 
+create procedure DeleteProduct(
+    @ID int
+)
+as begin
+    delete from Product
+    where ID = @ID
+end
+go
+
+create procedure DeleteCustomer(
+    @ID int
+)
+as begin
+    delete from Customer
+    where ID = @ID
+end
+go
+
 select * from [Product]
