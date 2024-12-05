@@ -16,6 +16,17 @@ as begin
 end
 go
 
+create procedure UpdateCustomerEmail(
+    @newEmail varchar(64),
+    @ID int
+)
+as begin
+    update Customer
+    set Email = @newEmail
+    where ID = @ID
+end
+go
+
 create procedure AddProduct(
     @Name varchar(32),
     @Category varchar(32),
@@ -47,4 +58,4 @@ as begin
 end
 go
 
-select * from [Order]
+select * from [Customer]

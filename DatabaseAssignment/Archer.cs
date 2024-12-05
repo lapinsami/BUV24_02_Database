@@ -27,6 +27,21 @@ public class Archer(string connectionString)
         customer.Id = (int)command.Parameters["@ID"].Value;
     }
     
+    public void UpdateCustomerEmail(int customerId, string newEmail)
+    {
+        using SqlConnection connection = new(_connectionString);
+        using SqlCommand command = connection.CreateCommand();
+
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = "UpdateCustomerEmail";
+        
+        command.Parameters.Add("@newEmail", SqlDbType.VarChar, 64).Value = newEmail;
+        command.Parameters.Add("@ID", SqlDbType.Int).Value = customerId;
+        
+        connection.Open();
+        command.ExecuteNonQuery();
+    }
+    
     public void AddProduct(Product product)
     {
         using SqlConnection connection = new(_connectionString);
