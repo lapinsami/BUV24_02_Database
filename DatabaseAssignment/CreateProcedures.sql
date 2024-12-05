@@ -82,4 +82,13 @@ as begin
 end
 go
 
+create procedure DeleteOrder(
+    @ID int
+)
+as begin
+    delete from [Order]
+    where ID = @ID
+end
+go
+
 select * from [Product]

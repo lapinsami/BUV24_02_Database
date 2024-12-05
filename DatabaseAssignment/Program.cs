@@ -36,6 +36,8 @@ class Program
         Console.WriteLine("------");
         
         archer.UpdateOrderProduct(1, 4);
+        
+        archer.DeleteOrder(3);
 
         List<Order> orderList = archer.GetOrders();
 

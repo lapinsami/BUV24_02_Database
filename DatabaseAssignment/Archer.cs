@@ -117,6 +117,20 @@ public class Archer(string connectionString)
         
         order.Id = (int)command.Parameters["@ID"].Value;
     }
+
+    public void DeleteOrder(int orderId)
+    {
+        using SqlConnection connection = new(_connectionString);
+        using SqlCommand command = connection.CreateCommand();
+        
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = "DeleteOrder";
+        
+        command.Parameters.Add("@ID", SqlDbType.Int).Value = orderId;
+        
+        connection.Open();
+        command.ExecuteNonQuery();
+    }
     
     public void UpdateOrderProduct(int orderId, int newProductId)
     {
