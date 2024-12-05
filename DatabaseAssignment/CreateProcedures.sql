@@ -32,4 +32,19 @@ as begin
 end
 go
 
-select * from Product
+create procedure AddOrder(
+    @CustomerId int,
+    @ProductId int,
+    @ID int output
+)
+as begin
+    insert into
+        [Order]
+    values
+        (@CustomerId, @ProductId, getdate())
+
+    set @ID = SCOPE_IDENTITY();
+end
+go
+
+select * from [Order]

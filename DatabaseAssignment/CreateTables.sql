@@ -20,14 +20,8 @@ create table Product (
 create table [Order] (
     ID int primary key identity not null,
     CustomerID int references Customer,
-    OrderDate date
-)
-
-create table OrderProduct (
-    OrderID int references [Order],
     ProductID int references Product,
-    Quantity int not null,
-    primary key (OrderID, ProductID)
+    OrderDate date
 )
 
 insert into Customer (FirstName, LastName, Email)
@@ -42,24 +36,13 @@ values
     ('Carrot', 'Vegetable', 0.32),
     ('Mustard', 'Condiment', 2.7)
 
-insert into [Order] (CustomerID, OrderDate)
+insert into [Order] (CustomerID, ProductID, OrderDate)
 values
-    (1, getdate()),
-    (1, getdate()),
-    (1, getdate()),
-    (2, getdate())
+    (1, 1, getdate()),
+    (1, 2, getdate()),
+    (1, 3, getdate()),
+    (2, 4, getdate())
 
-insert into OrderProduct (OrderID, ProductID, Quantity)
-values 
-    (1, 1, 7),
-    (1, 2, 7),
-    (1, 3, 7),
-    (1, 4, 7),
-    (2, 1, 1),
-    (3, 2, 1),
-    (4, 3, 1)
-
-select Customer.FirstName, Customer.LastName, Product.name, OrderProduct.Quantity from Customer
-join [Order] on Customer.ID = [Order].CustomerID
-join OrderProduct on [Order].ID = OrderProduct.ProductID
-join Product on OrderProduct.ProductID = Product.ID
+drop table [Order]
+drop table Product
+drop table Customer

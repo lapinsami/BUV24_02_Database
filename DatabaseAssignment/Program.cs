@@ -12,7 +12,10 @@ class Program
         Customer jen = new("Jennifer", "Frandsen", "jenfran@mail.com");
         Product cookingCream = new("Oatly", "Cream", 1.05m);
         
-        //archer.AddCustomer(jen);
+        archer.AddCustomer(jen);
         archer.AddProduct(cookingCream);
+
+        Order order = new(jen, cookingCream);
+        archer.AddOrder(order);
     }
 }

@@ -49,4 +49,22 @@ public class Archer(string connectionString)
         
         product.Id = (int)command.Parameters["@ID"].Value;
     }
+
+    public void AddOrder(Order order)
+    {
+        using SqlConnection connection = new (_connectionString);
+        using SqlCommand command = connection.CreateCommand();
+        
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = "AddOrder";
+        
+        command.Parameters.Add("@CustomerId", SqlDbType.Int).Value = order.CustomerId;
+        command.Parameters.Add("@ProductId", SqlDbType.Int).Value = order.ProductId;
+        
+        command.Parameters.Add("@ID", SqlDbType.Int).Direction = ParameterDirection.Output;
+        connection.Open();
+        command.ExecuteNonQuery();
+        
+        order.Id = (int)command.Parameters["@ID"].Value;
+    }
 }
