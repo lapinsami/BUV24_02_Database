@@ -7,7 +7,7 @@ create procedure AddCustomer(
     @ID int output
 )
 as begin
-    insert into
+    insert into 
         Customer
     values
         (@FirstName, @LastName, @Email)
@@ -16,4 +16,20 @@ as begin
 end
 go
 
-select * from Customer
+create procedure AddProduct(
+    @Name varchar(32),
+    @Category varchar(32),
+    @Price decimal(19, 4),
+    @ID int output
+)
+as begin
+    insert into
+        Product
+    values
+        (@Name, @Category, @Price)
+
+    set @ID = SCOPE_IDENTITY();
+end
+go
+
+select * from Product

@@ -20,8 +20,33 @@ public class Archer(string connectionString)
         command.Parameters.Add("@Email", SqlDbType.VarChar, 64).Value = customer.Email;
         
         command.Parameters.Add("@ID", SqlDbType.Int).Direction = ParameterDirection.Output;
+        
         connection.Open();
         command.ExecuteNonQuery();
+        
         customer.Id = (int)command.Parameters["@ID"].Value;
+    }
+    
+    public void AddProduct(Product product)
+    {
+        using SqlConnection connection = new (_connectionString);
+        using SqlCommand command = connection.CreateCommand();
+
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = "AddProduct";
+        
+        command.Parameters.Add("@Name", SqlDbType.VarChar, 32).Value = product.Name;
+        command.Parameters.Add("@Category", SqlDbType.VarChar, 32).Value = product.Category;
+        command.Parameters.Add(new SqlParameter("@Price", SqlDbType.Decimal)
+        {
+            Precision = 19,
+            Scale = 4
+        }).Value = product.Price;
+        
+        command.Parameters.Add("@ID", SqlDbType.Int).Direction = ParameterDirection.Output;
+        connection.Open();
+        command.ExecuteNonQuery();
+        
+        product.Id = (int)command.Parameters["@ID"].Value;
     }
 }
