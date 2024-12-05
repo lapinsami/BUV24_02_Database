@@ -5,8 +5,8 @@ class Program
     static void Main(string[] args)
     {
         string windowsConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Archer;Integrated Security=True;Connect Timeout=60;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
-        string linuxConnectionString = File.ReadAllText("/home/sami/mssql.txt");
-        Archer archer = new(linuxConnectionString);
+        //string linuxConnectionString = File.ReadAllText("/home/sami/mssql.txt");
+        Archer archer = new(windowsConnectionString);
         
         // print the initial contents
         Console.WriteLine("initial database contents: ");
