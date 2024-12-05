@@ -67,4 +67,90 @@ public class Archer(string connectionString)
         
         order.Id = (int)command.Parameters["@ID"].Value;
     }
+    
+    public Customer? GetCustomerById(int id)
+    {
+        Customer? customer = null;
+
+        using SqlConnection connection = new SqlConnection(_connectionString);
+        using SqlCommand command = connection.CreateCommand();
+
+        command.CommandText = @"select * from Customer where ID = @ID";
+        command.CommandType = CommandType.Text;
+        command.Parameters.Add("@ID", SqlDbType.Int).Value = id;
+
+        connection.Open();
+        using SqlDataReader reader = command.ExecuteReader();
+
+        if (reader.Read())
+        {
+            customer = new Customer(
+                (string)reader["FirstName"],
+                (string)reader["LastName"],
+                (string)reader["Email"]
+            )
+            {
+                Id = id
+            };
+        }
+
+        return customer;
+    }
+    
+    public Product? GetProductById(int id)
+    {
+        Product? product = null;
+
+        using SqlConnection connection = new SqlConnection(_connectionString);
+        using SqlCommand command = connection.CreateCommand();
+
+        command.CommandText = @"select * from Product where ID = @ID";
+        command.CommandType = CommandType.Text;
+        command.Parameters.Add("@ID", SqlDbType.Int).Value = id;
+
+        connection.Open();
+        using SqlDataReader reader = command.ExecuteReader();
+
+        if (reader.Read())
+        {
+            product = new Product(
+                (string)reader["Name"],
+                (string)reader["Category"],
+                (decimal)reader["Price"]
+            )
+            {
+                Id = id
+            };
+        }
+
+        return product;
+    }
+    
+    public Order? GetOrderById(int id)
+    {
+        Order? order = null;
+
+        using SqlConnection connection = new SqlConnection(_connectionString);
+        using SqlCommand command = connection.CreateCommand();
+
+        command.CommandText = @"select * from [Order] where ID = @ID";
+        command.CommandType = CommandType.Text;
+        command.Parameters.Add("@ID", SqlDbType.Int).Value = id;
+
+        connection.Open();
+        using SqlDataReader reader = command.ExecuteReader();
+
+        if (reader.Read())
+        {
+            order = new Order(
+                (int)reader["CustomerID"],
+                (int)reader["ProductID"]
+            )
+            {
+                Id = id
+            };
+        }
+
+        return order;
+    }
 }

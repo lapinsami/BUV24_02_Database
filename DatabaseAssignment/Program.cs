@@ -9,13 +9,31 @@ class Program
         Archer archer = new(linuxConnectionString);
         
 
-        Customer jen = new("Jennifer", "Frandsen", "jenfran@mail.com");
-        Product cookingCream = new("Oatly", "Cream", 1.05m);
+        //Customer jen = new("Jennifer", "Frandsen", "jenfran@mail.com");
+        //Product cookingCream = new("Oatly", "Cream", 1.05m);
+        //Order order = new(jen, cookingCream);
         
-        archer.AddCustomer(jen);
-        archer.AddProduct(cookingCream);
+        //archer.AddCustomer(jen);
+        //archer.AddProduct(cookingCream);
+        //archer.AddOrder(order);
 
-        Order order = new(jen, cookingCream);
-        archer.AddOrder(order);
+        Customer? customer = archer.GetCustomerById(2);
+        if (customer != null)
+        {
+            Console.WriteLine(customer.FirstName);
+        }
+        
+        Product? product = archer.GetProductById(2);
+        if (product != null)
+        {
+            Console.WriteLine(product.Name);
+        }
+        
+        Order? order = archer.GetOrderById(4);
+        if (order != null)
+        {
+            Console.WriteLine(order.ProductId);
+            Console.WriteLine(order.CustomerId);
+        }
     }
 }
