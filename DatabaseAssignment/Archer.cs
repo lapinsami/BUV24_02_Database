@@ -154,9 +154,9 @@ public class Archer(string connectionString)
         return order;
     }
     
-    public List<Customer>? GetCustomers()
+    public List<Customer> GetCustomers()
     {
-        List<Customer>? customers = null;
+        List<Customer> customers = [];
 
         using SqlConnection connection = new(_connectionString);
         using SqlCommand command = connection.CreateCommand();
@@ -167,26 +167,85 @@ public class Archer(string connectionString)
         connection.Open();
         using SqlDataReader reader = command.ExecuteReader();
 
-        if (reader.HasRows)
+        if (!reader.HasRows) return customers;
+
+        while (reader.Read())
         {
-            customers = new List<Customer>();
-
-            while (reader.Read())
+            Customer customer = new(
+                (string)reader["FirstName"],
+                (string)reader["LastName"],
+                (string)reader["Email"]
+            )
             {
-                Customer customer = new(
+                Id = (int)reader["ID"]
+            };
 
-                    (string)reader["FirstName"],
-                    (string)reader["LastName"],
-                    (string)reader["Email"]
-                )
-                {
-                    Id = (int)reader["ID"]
-                };
-
-                customers.Add(customer);
-            }
+            customers.Add(customer);
         }
 
         return customers;
+    }
+    
+    public List<Product> GetProducts()
+    {
+        List<Product> products = [];
+
+        using SqlConnection connection = new(_connectionString);
+        using SqlCommand command = connection.CreateCommand();
+
+        command.CommandText = @"select * from Product";
+        command.CommandType = CommandType.Text;
+        
+        connection.Open();
+        using SqlDataReader reader = command.ExecuteReader();
+
+        if (!reader.HasRows) return products;
+
+        while (reader.Read())
+        {
+            Product product = new(
+                (string)reader["Name"],
+                (string)reader["Category"],
+                (decimal)reader["Price"]
+            )
+            {
+                Id = (int)reader["ID"]
+            };
+
+            products.Add(product);
+        }
+
+        return products;
+    }
+    
+    public List<Order> GetOrders()
+    {
+        List<Order> orders = [];
+
+        using SqlConnection connection = new(_connectionString);
+        using SqlCommand command = connection.CreateCommand();
+
+        command.CommandText = @"select * from [Order]";
+        command.CommandType = CommandType.Text;
+        
+        connection.Open();
+        using SqlDataReader reader = command.ExecuteReader();
+
+        if (!reader.HasRows) return orders;
+
+        while (reader.Read())
+        {
+            Order order = new(
+                (int)reader["CustomerID"],
+                (int)reader["ProductID"]
+            )
+            {
+                Id = (int)reader["ID"]
+            };
+
+            orders.Add(order);
+        }
+
+        return orders;
     }
 }
